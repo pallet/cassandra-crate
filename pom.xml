@@ -3,10 +3,14 @@
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>org.cloudhoist</groupId>
-    <artifactId>pallet-crates</artifactId>
-    <version>0.5.1-SNAPSHOT</version>
-    <relativePath>..</relativePath>
+    <artifactId>pallet-crate-pom</artifactId>
+    <version>0.7.0-SNAPSHOT</version>
   </parent>
+  <scm>
+    <connection>scm:git:git://github.com/pallet/cassandra-crate.git</connection>
+    <developerConnection>scm:git:ssh://git@github.com/pallet/cassandra-crate.git</developerConnection>
+    <url>https://github.com/pallet/cassandra-crate</url>
+  </scm>
   <artifactId>cassandra</artifactId>
-  <version>0.5.1-SNAPSHOT</version>
+  <version>0.7.0-SNAPSHOT</version>
 </project>
