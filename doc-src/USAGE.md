@@ -3,7 +3,7 @@
 The `server-spec` function provides a convenient pallet server spec for
 cassandra.  It takes a single map as an argument, specifying configuration
 choices, as described below for the `settings` function.  You can use this
-in your own group or server specs in the :extends clause.
+in your own group or server specs in the `:extends` clause.
 
 ```clj
 (require '[pallet.crate.cassandra :as cassandra])
@@ -22,4 +22,4 @@ crates wanting to interact with cassandra.
 The `install` function is responsible for actually installing cassandra.
 
 The `configure` function writes the cassandra configuration file, using the form
-passed to the :config key in the `settings` function.
+passed to the `:config` key in the `settings` function.

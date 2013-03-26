@@ -3,7 +3,8 @@
                  [com.palletops/crates "0.8.0-SNAPSHOT"]
                  [ch.qos.logback/logback-classic "1.0.9"]]
   :plugins [[lein-set-version "0.3.0"]
-            [lein-resource "0.3.2"]]
+            [lein-resource "0.3.2"]
+            [com.palletops/pallet-lein "0.6.0-beta.7"]]
   :aliases {"live-test-up"
             ["pallet" "up"
              "--phases" "install,configure,test"
@@ -18,11 +19,13 @@
                   [lein-marginalia "0.7.1"]]
         :codox {:writer codox-md.writer/write-docs
                 :output-dir "doc/0.8/api"
-                :src-dir-uri "https://github.com/pallet/runit-crate/blob/develop"
+                :src-dir-uri
+                "https://github.com/pallet/cassandra-crate/blob/develop"
                 :src-linenum-anchor-prefix "L"}
         :aliases {"marg" ["marg" "-d" "doc/0.8/annotated"]
                   "codox" ["doc"]
-                  "doc" ["do" "codox," "marg"]}}
+                  "doc" ["do" "with-profile" "+doc" "codox,"
+                         "with-profile" "+doc" "marg"]}}
   :release
   {:set-version
    {:updates [{:path "README.md" :no-snapshot true}]}}}
