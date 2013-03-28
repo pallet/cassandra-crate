@@ -418,7 +418,10 @@ operation for index'th of n operations over the course of a Sunday."
   (let [authorize (ns-resolve 'org.jclouds.ec2.security-group2 'authorize)
         group (jclouds-group)]
     (debugf "open-ports group %s port %s udp" group 9160)
-    (authorize (compute-service) group 9160 :protocol :udp)))
+    (try
+      (authorize (compute-service) group 9160 :protocol :udp)
+      (catch Exception e
+        (debugf "While changing security group: %s" (.getMessage e))))))
 
 (defplan configure
   "Configure cassandra."
