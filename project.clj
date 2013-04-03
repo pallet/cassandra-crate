@@ -6,7 +6,7 @@
   :scm {:url "git@github.com:pallet/cassandra-crate.git"}
 
   :dependencies [[org.clojure/clojure "1.4.0"]
-                 [com.palletops/pallet "0.8.0-SNAPSHOT"]
+                 [com.palletops/pallet "0.8.0-beta.6"]
                  [clj-yaml "0.4.0"]]
   :resource {:resource-paths ["doc-src"]
              :target-path "target/classes/pallet_crate/cassandra_crate/"
