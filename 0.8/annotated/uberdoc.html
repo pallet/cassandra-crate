@@ -3029,11 +3029,14 @@ net.brehaut.ClojureTools = (function (SH) {
   };
 })(SyntaxHighlighter);
 </script><title>com.palletops/cassandra-crate -- Marginalia</title></head><body><table><tr><td class="docs"><div class="header"><h1 class="project-name">com.palletops/cassandra-crate</h1><h2 class="project-version">0.8.0-SNAPSHOT</h2><br /><p>Pallet crate to install, configure and use cassandra.</p>
-</div><div class="dependencies"><h3>dependencies</h3><table><tr><td class="dep-name">org.clojure/clojure</td><td class="dotted"><hr /></td><td class="dep-version">1.4.0</td></tr><tr><td class="dep-name">com.palletops/pallet</td><td class="dotted"><hr /></td><td class="dep-version">0.8.0-SNAPSHOT</td></tr><tr><td class="dep-name">clj-yaml</td><td class="dotted"><hr /></td><td class="dep-version">0.4.0</td></tr></table></div></td><td class="codes" style="text-align: center; vertical-align: middle;color: #666;padding-right:20px"><br /><br /><br />(this space intentionally left almost blank)</td></tr><tr><td class="docs"><div class="toc"><a name="toc"><h3>namespaces</h3></a><ul><li><a href="#pallet.crate.cassandra">pallet.crate.cassandra</a></li></ul></div></td><td class="codes">&nbsp;</td></tr><tr><td class="docs"><div class="docs-header"><a class="anchor" href="#pallet.crate.cassandra" name="pallet.crate.cassandra"><h1 class="project-name">pallet.crate.cassandra</h1><a class="toc-link" href="#toc">toc</a></a></div></td><td class="codes" /></tr><tr><td class="docs"><p>Pallet crate to install, configure and operate Cassandra.</p>
+</div><div class="dependencies"><h3>dependencies</h3><table><tr><td class="dep-name">org.clojure/clojure</td><td class="dotted"><hr /></td><td class="dep-version">1.4.0</td></tr><tr><td class="dep-name">com.palletops/pallet</td><td class="dotted"><hr /></td><td class="dep-version">0.8.0-beta.6</td></tr><tr><td class="dep-name">clj-yaml</td><td class="dotted"><hr /></td><td class="dep-version">0.4.0</td></tr></table></div></td><td class="codes" style="text-align: center; vertical-align: middle;color: #666;padding-right:20px"><br /><br /><br />(this space intentionally left almost blank)</td></tr><tr><td class="docs"><div class="toc"><a name="toc"><h3>namespaces</h3></a><ul><li><a href="#pallet.crate.cassandra">pallet.crate.cassandra</a></li></ul></div></td><td class="codes">&nbsp;</td></tr><tr><td class="docs"><div class="docs-header"><a class="anchor" href="#pallet.crate.cassandra" name="pallet.crate.cassandra"><h1 class="project-name">pallet.crate.cassandra</h1><a class="toc-link" href="#toc">toc</a></a></div></td><td class="codes" /></tr><tr><td class="docs"><p>Pallet crate to install, configure and operate Cassandra.</p>
 
 <h2>See Also</h2>
 
-<p>http://wiki.apache.org/cassandra/Operations.</p>
+<ul>
+<li>http://wiki.apache.org/cassandra/Operations</li>
+<li>http://www.datastax.com/docs/1.2/configuration/node_configuration</li>
+</ul>
 </td><td class="codes"><pre class="brush: clojure">(ns pallet.crate.cassandra
   (:require
    [clojure.tools.logging :refer [debugf warnf]]
@@ -3083,7 +3086,8 @@ net.brehaut.ClojureTools = (function (SH) {
    &quot;-javaagent:\\${CASSANDRA_HOME}/lib/jamm-0.2.5.jar&quot;
    &quot;-ea&quot;])</pre></td></tr><tr><td class="docs"><p>Default cassandra configuration options</p>
 
-<p>http://www.datastax.com/docs/0.8/configuration/node_configuration</p>
+<p>http://www.datastax.com/docs/0.8/configuration/node_configuration
+TODO - make these version specific</p>
 </td><td class="codes"><pre class="brush: clojure">(defn default-settings
   []
   {:config-dir (fragment (file (config-root) &quot;cassandra&quot;))
@@ -3093,63 +3097,55 @@ net.brehaut.ClojureTools = (function (SH) {
    :service-name &quot;cassandra&quot;
    :supervisor :initd
    :version &quot;1.1&quot;
+   :group-data-centers nil
+   :max-seeds 1
    :server
-   {:cluster_name &quot;pallet-cluster&quot;
-    :initial_token nil
-    :hinted_handoff_enabled true
-    :max_hint_window_in_ms 3600000
-    ;; :hinted_handoff_throttle_delay_in_ms 50 not in 1.2
-    :authenticator &quot;org.apache.cassandra.auth.AllowAllAuthenticator&quot;
+   {:authenticator &quot;org.apache.cassandra.auth.AllowAllAuthenticator&quot;
     :authority &quot;org.apache.cassandra.auth.AllowAllAuthority&quot;
-    :partitioner &quot;org.apache.cassandra.dht.RandomPartitioner&quot;
-    :data_file_directories [&quot;/mnt/cassandra/data&quot;]
+    :cluster_name &quot;pallet-cluster&quot;
+    :column_index_size_in_kb 64
     :commitlog_directory &quot;/mnt/cassandra/commitlog&quot;
-    :saved_caches_directory &quot;/mnt/cassandra/saved_caches&quot;
     :commitlog_sync &quot;periodic&quot;
     :commitlog_sync_period_in_ms 20000
-    :seed_provider [{:class_name &quot;org.apache.cassandra.locator.SimpleSeedProvider&quot;
-                     :parameters [{:seeds &quot;127.0.0.1&quot;}]}]
-    :flush_largest_memtables_at 0.75
-    :reduce_cache_sizes_at 0.85
-    :reduce_cache_capacity_to 0.6
+    :commitlog_total_space_in_mb 4096
+    :compaction_preheat_key_cache true
     :concurrent_reads 16
     :concurrent_writes 32
-    :memtable_flush_queue_size 4
-    :storage_port 7000
-    ;; :listen_address &quot;localhost&quot;
-    ;; :rpc_address &quot;0.0.0.0&quot;
-    :rpc_port 9160
-    :rpc_keepalive true
-    :rpc_server_type &quot;sync&quot; ; &quot;hsha&quot; caused issues on ec2
-    :commitlog_total_space_in_mb 4096
-    :memtable_total_space_in_mb 4096
-    :thrift_framed_transport_size_in_mb 15
-    :thrift_max_message_length_in_mb 16
-    :incremental_backups false
-    :snapshot_before_compaction false
-    :column_index_size_in_kb 64
-    :in_memory_compaction_limit_in_mb 64
-    :multithreaded_compaction false
-    ;;:compaction_throughput_mb_per_sec 128
-    :compaction_preheat_key_cache true
-    ;; :rpc_timeout_in_ms 10000
-    :dynamic_snitch_update_interval_in_ms 100
-    :dynamic_snitch_reset_interval_in_ms 600000
+    :data_file_directories [&quot;/mnt/cassandra/data&quot;]
     :dynamic_snitch_badness_threshold 0.0
-    :request_scheduler &quot;org.apache.cassandra.scheduler.NoScheduler&quot;
-    :index_interval 128
+    :dynamic_snitch_reset_interval_in_ms 600000
+    :dynamic_snitch_update_interval_in_ms 100
     :encryption_options {:internode_encryption &quot;none&quot;
                          :keystore &quot;conf/.keystore&quot;
                          :keystore_password &quot;cassandra&quot;
                          :truststore &quot;conf/.truststore&quot;
-                         :truststore_password &quot;cassandra&quot;}}
-   :main {:group-data-centers nil
-          :max-seeds 1
-          ;; :heap-new &quot;400M&quot;
-          ;; :young-gen-size &quot;200M&quot;
-          ;; :stack-size &quot;256K&quot;
-          :jmx-port 7199
-          :jvm-opts default-jvm-opts}})</pre></td></tr><tr><td class="docs"><p>Maximum of the token space</p>
+                         :truststore_password &quot;cassandra&quot;}
+    :flush_largest_memtables_at 0.75
+    :hinted_handoff_enabled true
+    :in_memory_compaction_limit_in_mb 64
+    :incremental_backups false
+    :index_interval 128
+    :initial_token nil
+    :max_hint_window_in_ms 3600000
+    :memtable_flush_queue_size 4
+    :memtable_total_space_in_mb 4096
+    :multithreaded_compaction false
+    :partitioner &quot;org.apache.cassandra.dht.RandomPartitioner&quot;
+    :reduce_cache_capacity_to 0.6
+    :reduce_cache_sizes_at 0.85
+    :request_scheduler &quot;org.apache.cassandra.scheduler.NoScheduler&quot;
+    :rpc_keepalive true
+    :rpc_port 9160
+    :rpc_server_type &quot;hsha&quot;
+    :saved_caches_directory &quot;/mnt/cassandra/saved_caches&quot;
+    :seed_provider [{:class_name &quot;org.apache.cassandra.locator.SimpleSeedProvider&quot;
+                     :parameters [{:seeds &quot;127.0.0.1&quot;}]}]
+    :snapshot_before_compaction false
+    :storage_port 7000
+    :thrift_framed_transport_size_in_mb 15
+    :thrift_max_message_length_in_mb 16}
+   :service {:jmx-port 7199
+             :jvm-opts default-jvm-opts}})</pre></td></tr><tr><td class="docs"><p>Maximum of the token space</p>
 </td><td class="codes"><pre class="brush: clojure">(def ^:const token-space
   (reduce * (repeat (bigint 127) (bigint 2))))</pre></td></tr><tr><td class="docs"><p>Return tokens for a cassandra cluster of size count, evenly distributed over
 token-space.  See http://wiki.apache.org/cassandra/Operations#Token_selection.</p>
@@ -3202,13 +3198,13 @@ over the token-space based on the number of nodes in the group.</p>
   [_ node]
   &quot;0.0.0.0&quot;)</pre></td></tr><tr><td class="docs"><p>Update settings with cluster specific values.</p>
 </td><td class="codes"><pre class="brush: clojure">(defn computed-settings
-  [{:keys [main ram-fraction]
+  [{:keys [max-seeds service ram-fraction]
     :or {ram-fraction 0.4}
     :as settings}]
   ;; note there are two java processes, so ram-fraction should be less than
   ;; 0.5, as the ram settings are per JVM
   {:pre [(&lt;= ram-fraction 0.5)]}
-  (let [{:keys [config max-seeds seeds token token-index]} main
+  (let [{:keys [config seeds token token-index]} service
         {:keys [ram] :as hw} (hardware (target-node))
         ram (- ram 100)                 ; allow the OS some ram
         ip (or (private-ip (target-node)) (primary-ip (target-node)))
@@ -3232,7 +3228,7 @@ over the token-space based on the number of nodes in the group.</p>
                      (deep-merge config)
                      (assoc-in [:seed_provider 0 :parameters 0 :seeds]
                                (seeds-list max-seeds seeds))))
-     (update-in [:main] #(merge default-sizes %)))))</pre></td></tr><tr><td class="docs">
+     (update-in [:service] #(merge default-sizes %)))))</pre></td></tr><tr><td class="docs">
 </td><td class="codes"><pre class="brush: clojure">(defmulti-version-plan settings-map [version settings])</pre></td></tr><tr><td class="docs">
 </td><td class="codes"><pre class="brush: clojure">(defmethod-version-plan
     settings-map {:os :debian-base}
@@ -3252,15 +3248,60 @@ over the token-space based on the number of nodes in the group.</p>
            :packages [&quot;cassandra&quot;])))</pre></td></tr><tr><td class="docs"><p>Settings for cassandra</p>
 
 <p><code>:server</code>
-: a map of options as specified in
-  http://www.datastax.com/docs/0.8/configuration/node_configuration.  These
-  will be serialised to yaml.</p>
+: a map of options as specified by
+  <a href="http://www.datastax.com/docs/1.2/configuration/node_configuration">cassandra</a>.
+  These will be serialised to yaml.  The <code>:endpoint_snitch</code> defaults to
+  <code>SimpleSnitch</code> except on EC2, where <code>Ec2Snitch</code> is used.</p>
+
+<p><code>:service</code>
+: a map of options for the jvm processes used to run cassandra.  The options to
+  control memory, <code>:max-heap</code>, <code>:heap-new</code>, <code>:young-gen-size</code>, and <code>:stack-size</code>
+  are defaulted based on the size of the node.  The algorithm is controlled by
+  the <code>:ram-fraction</code> option.  <code>:jmx-port</code> and <code>:jvm-opts</code> are other supported
+  keys.</p>
+
+<p><code>:ram-fraction</code>
+: controls the amount of ram allocated to the cassandra processes.  It is a
+  fraction that is applied to the node's installed total ram (less 100K for the
+  OS). There are two cassandra processes, so the value should be less than
+  0.5. It defaults to 0.4.</p>
+
+<p><code>:config-dir</code>
+: the directory used to write the configuration files.</p>
+
+<p><code>:owner</code>
+: the owner for cassandra files and directories</p>
+
+<p><code>:group</code>
+: the group for cassandra files and directories</p>
+
+<p><code>:user</code>
+: the user to run the cassandra service</p>
+
+<p><code>:service-name</code>
+: the supervision service name</p>
+
+<p><code>:supervisor</code>
+: the supervision service implementation (default :initd)</p>
+
+<p><code>:version</code>
+: the cassandra version to install</p>
+
+<p><code>:group-data-centers</code>
+: a map from group name to vectors of data center and rack names</p>
+
+<p><code>:max-seeds</code>
+: the maximum number of seed nodes to use</p>
+
+<p><code>:rpc-address-algo</code>
+: a keyword specifying which ip address to use for rpc_address.  Valid values
+  are :private, :public and :all (which binds 0.0.0.0).</p>
 </td><td class="codes"><pre class="brush: clojure">(defplan settings
   [{:keys [server] :as settings} {:keys [instance-id] :as options}]
   (let [settings (deep-merge (default-settings) settings)
         settings (settings-map (:version settings) settings)
         settings (computed-settings settings)]
-    (assoc-settings :cassandra settings {:instance-id instance-id})))</pre></td></tr><tr><td class="docs"><p>Install cassandra</p>
+    (assoc-settings :cassandra settings {:instance-id instance-id})))</pre></td></tr><tr><td class="docs"><p>Install cassandra.</p>
 
 <h1>Install</h1>
 </td><td class="codes"><pre class="brush: clojure">(defplan install
@@ -3351,7 +3392,7 @@ from jclouds</p>
 </td><td class="codes"><pre class="brush: clojure">(defn ec2-region [node]
   (.. node getLocation getParent getId))</pre></td></tr><tr><td class="docs">
 </td><td class="codes"><pre class="brush: clojure">(defn jclouds-group []
-  (str &quot;jclouds#&quot; (name (group-name)) ;; &quot;#&quot; (ec2-region (target-node))))</pre></td></tr><tr><td class="docs"><p>Open ports for cassandra</p>
+  (str &quot;jclouds#&quot; (name (group-name))))</pre></td></tr><tr><td class="docs"><p>Open ports for cassandra</p>
 </td><td class="codes"><pre class="brush: clojure">(defmulti open-ports
   (fn [] (:provider (service-properties (compute-service)))))</pre></td></tr><tr><td class="docs">
 </td><td class="codes"><pre class="brush: clojure">(defmethod open-ports :default [])</pre></td></tr><tr><td class="docs">
@@ -3361,15 +3402,16 @@ from jclouds</p>
   (let [authorize (ns-resolve 'org.jclouds.ec2.security-group2 'authorize)
         group (jclouds-group)]
     (debugf &quot;open-ports group %s port %s udp&quot; group 9160)
-    (authorize (compute-service) group 9160 :protocol :udp)))</pre></td></tr><tr><td class="docs"><p>Configure cassandra</p>
+    (try
+      (authorize (compute-service) group 9160 :protocol :udp)
+      (catch Exception e
+        (debugf &quot;While changing security group: %s&quot; (.getMessage e))))))</pre></td></tr><tr><td class="docs"><p>Configure cassandra.</p>
 </td><td class="codes"><pre class="brush: clojure">(defplan configure
   [{:keys [instance-id] :as options}]
-  (let [{:keys [main server] :as settings} (get-settings
-                                            :cassandra
-                                            {:instance-id instance-id})
-        {:keys [group-data-centers
-                max-heap heap-new stack-size young-gen-size
-                jmx-port jvm-opts]} main]
+  (let [{:keys [group-data-centers service server] :as settings}
+        (get-settings :cassandra {:instance-id instance-id})
+        {:keys [max-heap heap-new stack-size young-gen-size
+                jmx-port jvm-opts]} service]
     (debugf &quot;config&quot;)
     (repair-cronjob)
     (debugf &quot;config group-data-centers %s&quot; group-data-centers)

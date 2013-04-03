@@ -53,11 +53,14 @@
 
 <h2>See Also</h2>
 
-<p>http://wiki.apache.org/cassandra/Operations.</p>
+<ul>
+<li>http://wiki.apache.org/cassandra/Operations</li>
+<li>http://www.datastax.com/docs/1.2/configuration/node_configuration</li>
+</ul>
 </div>
         <div class="ns-vars">
           <div class="public">
-            <h3><a id="var-cassandra-config-changed-flag" class="source var-name" href="https://github.com/pallet/runit-crate/blob/develop/src/pallet/crate/cassandra.clj#L29">cassandra-config-changed-flag</a></h3>
+            <h3><a id="var-cassandra-config-changed-flag" class="source var-name" href="https://github.com/pallet/cassandra-crate/blob/develop/src/pallet/crate/cassandra.clj#L30">cassandra-config-changed-flag</a></h3>
             <h4 class="var-type var" id="var-type">var</h4>
             
             
@@ -65,15 +68,15 @@
             <div class="doc"><p>Flag for recognising changes to configuration</p>
 </div>
           </div><div class="public">
-            <h3><a id="var-computed-settings" class="source var-name" href="https://github.com/pallet/runit-crate/blob/develop/src/pallet/crate/cassandra.clj#L197">computed-settings</a></h3>
+            <h3><a id="var-computed-settings" class="source var-name" href="https://github.com/pallet/cassandra-crate/blob/develop/src/pallet/crate/cassandra.clj#L191">computed-settings</a></h3>
             <h4 class="var-type fn" id="var-type">fn</h4>
-            <div class="usage">[{:keys [main ram-fraction], :or {ram-fraction 0.4}, :as settings}]</div>
+            <div class="usage">[{:keys [max-seeds service ram-fraction], :or {ram-fraction 0.4}, :as settings}]</div>
             
             
             <div class="doc"><p>Update settings with cluster specific values.</p>
 </div>
           </div><div class="public">
-            <h3><a id="var-config-file" class="source var-name" href="https://github.com/pallet/runit-crate/blob/develop/src/pallet/crate/cassandra.clj#L281">config-file</a></h3>
+            <h3><a id="var-config-file" class="source var-name" href="https://github.com/pallet/cassandra-crate/blob/develop/src/pallet/crate/cassandra.clj#L320">config-file</a></h3>
             <h4 class="var-type fn" id="var-type">fn</h4>
             <div class="usage">[{:keys [owner group config-dir], :as settings} filename file-source]</div>
             
@@ -81,15 +84,15 @@
             <div class="doc"><p>Helper to write config files</p>
 </div>
           </div><div class="public">
-            <h3><a id="var-configure" class="source var-name" href="https://github.com/pallet/runit-crate/blob/develop/src/pallet/crate/cassandra.clj#L385">configure</a></h3>
+            <h3><a id="var-configure" class="source var-name" href="https://github.com/pallet/cassandra-crate/blob/develop/src/pallet/crate/cassandra.clj#L426">configure</a></h3>
             <h4 class="var-type fn" id="var-type">fn</h4>
             <div class="usage">[{:keys [instance-id], :as options}]</div>
             
             
-            <div class="doc"><p>Configure cassandra</p>
+            <div class="doc"><p>Configure cassandra.</p>
 </div>
           </div><div class="public">
-            <h3><a id="var-cron-time" class="source var-name" href="https://github.com/pallet/runit-crate/blob/develop/src/pallet/crate/cassandra.clj#L322">cron-time</a></h3>
+            <h3><a id="var-cron-time" class="source var-name" href="https://github.com/pallet/cassandra-crate/blob/develop/src/pallet/crate/cassandra.clj#L361">cron-time</a></h3>
             <h4 class="var-type fn" id="var-type">fn</h4>
             <div class="usage">[index n]</div>
             
@@ -99,7 +102,7 @@ Assumes an operation should be run once a day, and tries to spread the
 operation for index'th of n operations over the course of a Sunday.</p>
 </div>
           </div><div class="public">
-            <h3><a id="var-default-jvm-opts" class="source var-name" href="https://github.com/pallet/runit-crate/blob/develop/src/pallet/crate/cassandra.clj#L33">default-jvm-opts</a></h3>
+            <h3><a id="var-default-jvm-opts" class="source var-name" href="https://github.com/pallet/cassandra-crate/blob/develop/src/pallet/crate/cassandra.clj#L34">default-jvm-opts</a></h3>
             <h4 class="var-type var" id="var-type">var</h4>
             
             
@@ -107,7 +110,7 @@ operation for index'th of n operations over the course of a Sunday.</p>
             <div class="doc"><p>JVM options for Cassandra</p>
 </div>
           </div><div class="public">
-            <h3><a id="var-default-settings" class="source var-name" href="https://github.com/pallet/runit-crate/blob/develop/src/pallet/crate/cassandra.clj#L57">default-settings</a></h3>
+            <h3><a id="var-default-settings" class="source var-name" href="https://github.com/pallet/cassandra-crate/blob/develop/src/pallet/crate/cassandra.clj#L59">default-settings</a></h3>
             <h4 class="var-type fn" id="var-type">fn</h4>
             <div class="usage">[]</div>
             
@@ -115,7 +118,7 @@ operation for index'th of n operations over the course of a Sunday.</p>
             <div class="doc"><p>Default cassandra configuration options</p>
 </div>
           </div><div class="public">
-            <h3><a id="var-environment" class="source var-name" href="https://github.com/pallet/runit-crate/blob/develop/src/pallet/crate/cassandra.clj#L291">environment</a></h3>
+            <h3><a id="var-environment" class="source var-name" href="https://github.com/pallet/cassandra-crate/blob/develop/src/pallet/crate/cassandra.clj#L330">environment</a></h3>
             <h4 class="var-type fn" id="var-type">fn</h4>
             <div class="usage">[max-heap heap-new stack-size young-gen-size jmx-port jvm-opts]</div>
             
@@ -123,7 +126,7 @@ operation for index'th of n operations over the course of a Sunday.</p>
             <div class="doc"><p>cassandra-env.sh file content.</p>
 </div>
           </div><div class="public">
-            <h3><a id="var-initial-token" class="source var-name" href="https://github.com/pallet/runit-crate/blob/develop/src/pallet/crate/cassandra.clj#L138">initial-token</a></h3>
+            <h3><a id="var-initial-token" class="source var-name" href="https://github.com/pallet/cassandra-crate/blob/develop/src/pallet/crate/cassandra.clj#L132">initial-token</a></h3>
             <h4 class="var-type fn" id="var-type">fn</h4>
             <div class="usage">[supplied-tokens token-index]</div>
             
@@ -132,15 +135,15 @@ operation for index'th of n operations over the course of a Sunday.</p>
 over the token-space based on the number of nodes in the group.</p>
 </div>
           </div><div class="public">
-            <h3><a id="var-install" class="source var-name" href="https://github.com/pallet/runit-crate/blob/develop/src/pallet/crate/cassandra.clj#L264">install</a></h3>
+            <h3><a id="var-install" class="source var-name" href="https://github.com/pallet/cassandra-crate/blob/develop/src/pallet/crate/cassandra.clj#L303">install</a></h3>
             <h4 class="var-type fn" id="var-type">fn</h4>
             <div class="usage">[{:keys [instance-id]}]</div>
             
             
-            <div class="doc"><p>Install cassandra</p>
+            <div class="doc"><p>Install cassandra.</p>
 </div>
           </div><div class="public">
-            <h3><a id="var-open-ports" class="source var-name" href="https://github.com/pallet/runit-crate/blob/develop/src/pallet/crate/cassandra.clj#L371">open-ports</a></h3>
+            <h3><a id="var-open-ports" class="source var-name" href="https://github.com/pallet/cassandra-crate/blob/develop/src/pallet/crate/cassandra.clj#L409">open-ports</a></h3>
             <h4 class="var-type var" id="var-type">var</h4>
             
             
@@ -148,7 +151,7 @@ over the token-space based on the number of nodes in the group.</p>
             <div class="doc"><p>Open ports for cassandra</p>
 </div>
           </div><div class="public">
-            <h3><a id="var-repair-cronjob" class="source var-name" href="https://github.com/pallet/runit-crate/blob/develop/src/pallet/crate/cassandra.clj#L352">repair-cronjob</a></h3>
+            <h3><a id="var-repair-cronjob" class="source var-name" href="https://github.com/pallet/cassandra-crate/blob/develop/src/pallet/crate/cassandra.clj#L391">repair-cronjob</a></h3>
             <h4 class="var-type fn" id="var-type">fn</h4>
             <div class="usage">[]</div>
             
@@ -156,7 +159,7 @@ over the token-space based on the number of nodes in the group.</p>
             <div class="doc"><p>Create a cronjob to run the nodetool repair</p>
 </div>
           </div><div class="public">
-            <h3><a id="var-repair-cronjob-cron-file" class="source var-name" href="https://github.com/pallet/runit-crate/blob/develop/src/pallet/crate/cassandra.clj#L333">repair-cronjob-cron-file</a></h3>
+            <h3><a id="var-repair-cronjob-cron-file" class="source var-name" href="https://github.com/pallet/cassandra-crate/blob/develop/src/pallet/crate/cassandra.clj#L372">repair-cronjob-cron-file</a></h3>
             <h4 class="var-type fn" id="var-type">fn</h4>
             <div class="usage">[{:keys [keyspace day], :or {day 0, keyspace ""}}]</div>
             
@@ -165,7 +168,7 @@ over the token-space based on the number of nodes in the group.</p>
 of the week to run the repair can be chosed with day.</p>
 </div>
           </div><div class="public">
-            <h3><a id="var-seeds-list" class="source var-name" href="https://github.com/pallet/runit-crate/blob/develop/src/pallet/crate/cassandra.clj#L149">seeds-list</a></h3>
+            <h3><a id="var-seeds-list" class="source var-name" href="https://github.com/pallet/cassandra-crate/blob/develop/src/pallet/crate/cassandra.clj#L143">seeds-list</a></h3>
             <h4 class="var-type fn" id="var-type">fn</h4>
             <div class="usage">[max-seeds seeds]</div>
             
@@ -173,7 +176,7 @@ of the week to run the repair can be chosed with day.</p>
             <div class="doc"><p>Calculate the seed nodes</p>
 </div>
           </div><div class="public">
-            <h3><a id="var-server-spec" class="source var-name" href="https://github.com/pallet/runit-crate/blob/develop/src/pallet/crate/cassandra.clj#L422">server-spec</a></h3>
+            <h3><a id="var-server-spec" class="source var-name" href="https://github.com/pallet/cassandra-crate/blob/develop/src/pallet/crate/cassandra.clj#L461">server-spec</a></h3>
             <h4 class="var-type fn" id="var-type">fn</h4>
             <div class="usage">[settings &amp; {:keys [instance-id], :as options}]</div>
             
@@ -181,7 +184,7 @@ of the week to run the repair can be chosed with day.</p>
             <div class="doc"><p>Returns a server spec to install and configure a cassandra server spec.</p>
 </div>
           </div><div class="public">
-            <h3><a id="var-service" class="source var-name" href="https://github.com/pallet/runit-crate/blob/develop/src/pallet/crate/cassandra.clj#L412">service</a></h3>
+            <h3><a id="var-service" class="source var-name" href="https://github.com/pallet/cassandra-crate/blob/develop/src/pallet/crate/cassandra.clj#L451">service</a></h3>
             <h4 class="var-type fn" id="var-type">fn</h4>
             <div class="usage">[&amp; {:keys [action if-flag if-stopped instance-id], :or {action :manage}, :as options}]</div>
             
@@ -189,7 +192,7 @@ of the week to run the repair can be chosed with day.</p>
             <div class="doc"><p>Run the cassandra service.</p>
 </div>
           </div><div class="public">
-            <h3><a id="var-settings" class="source var-name" href="https://github.com/pallet/runit-crate/blob/develop/src/pallet/crate/cassandra.clj#L250">settings</a></h3>
+            <h3><a id="var-settings" class="source var-name" href="https://github.com/pallet/cassandra-crate/blob/develop/src/pallet/crate/cassandra.clj#L244">settings</a></h3>
             <h4 class="var-type fn" id="var-type">fn</h4>
             <div class="usage">[{:keys [server], :as settings} {:keys [instance-id], :as options}]</div>
             
@@ -197,12 +200,57 @@ of the week to run the repair can be chosed with day.</p>
             <div class="doc"><p>Settings for cassandra</p>
 
 <p><code>:server</code>
-: a map of options as specified in
-  http://www.datastax.com/docs/0.8/configuration/node_configuration.  These
-  will be serialised to yaml.</p>
+: a map of options as specified by
+  <a href="http://www.datastax.com/docs/1.2/configuration/node_configuration">cassandra</a>.
+  These will be serialised to yaml.  The <code>:endpoint_snitch</code> defaults to
+  <code>SimpleSnitch</code> except on EC2, where <code>Ec2Snitch</code> is used.</p>
+
+<p><code>:service</code>
+: a map of options for the jvm processes used to run cassandra.  The options to
+  control memory, <code>:max-heap</code>, <code>:heap-new</code>, <code>:young-gen-size</code>, and <code>:stack-size</code>
+  are defaulted based on the size of the node.  The algorithm is controlled by
+  the <code>:ram-fraction</code> option.  <code>:jmx-port</code> and <code>:jvm-opts</code> are other supported
+  keys.</p>
+
+<p><code>:ram-fraction</code>
+: controls the amount of ram allocated to the cassandra processes.  It is a
+  fraction that is applied to the node's installed total ram (less 100K for the
+  OS). There are two cassandra processes, so the value should be less than
+  0.5. It defaults to 0.4.</p>
+
+<p><code>:config-dir</code>
+: the directory used to write the configuration files.</p>
+
+<p><code>:owner</code>
+: the owner for cassandra files and directories</p>
+
+<p><code>:group</code>
+: the group for cassandra files and directories</p>
+
+<p><code>:user</code>
+: the user to run the cassandra service</p>
+
+<p><code>:service-name</code>
+: the supervision service name</p>
+
+<p><code>:supervisor</code>
+: the supervision service implementation (default :initd)</p>
+
+<p><code>:version</code>
+: the cassandra version to install</p>
+
+<p><code>:group-data-centers</code>
+: a map from group name to vectors of data center and rack names</p>
+
+<p><code>:max-seeds</code>
+: the maximum number of seed nodes to use</p>
+
+<p><code>:rpc-address-algo</code>
+: a keyword specifying which ip address to use for rpc_address.  Valid values
+  are :private, :public and :all (which binds 0.0.0.0).</p>
 </div>
           </div><div class="public">
-            <h3><a id="var-token-space" class="source var-name" href="https://github.com/pallet/runit-crate/blob/develop/src/pallet/crate/cassandra.clj#L126">token-space</a></h3>
+            <h3><a id="var-token-space" class="source var-name" href="https://github.com/pallet/cassandra-crate/blob/develop/src/pallet/crate/cassandra.clj#L120">token-space</a></h3>
             <h4 class="var-type var" id="var-type">var</h4>
             
             
@@ -210,7 +258,7 @@ of the week to run the repair can be chosed with day.</p>
             <div class="doc"><p>Maximum of the token space</p>
 </div>
           </div><div class="public">
-            <h3><a id="var-tokens" class="source var-name" href="https://github.com/pallet/runit-crate/blob/develop/src/pallet/crate/cassandra.clj#L130">tokens</a></h3>
+            <h3><a id="var-tokens" class="source var-name" href="https://github.com/pallet/cassandra-crate/blob/develop/src/pallet/crate/cassandra.clj#L124">tokens</a></h3>
             <h4 class="var-type fn" id="var-type">fn</h4>
             <div class="usage">[count]</div>
             
@@ -219,7 +267,7 @@ of the week to run the repair can be chosed with day.</p>
 token-space.  See http://wiki.apache.org/cassandra/Operations#Token_selection.</p>
 </div>
           </div><div class="public">
-            <h3><a id="var-topology-properties" class="source var-name" href="https://github.com/pallet/runit-crate/blob/develop/src/pallet/crate/cassandra.clj#L303">topology-properties</a></h3>
+            <h3><a id="var-topology-properties" class="source var-name" href="https://github.com/pallet/cassandra-crate/blob/develop/src/pallet/crate/cassandra.clj#L342">topology-properties</a></h3>
             <h4 class="var-type fn" id="var-type">fn</h4>
             <div class="usage">[group-data-centers]</div>
             
