@@ -1,5 +1,9 @@
 # Release notes
 
+## 0.8-alpha.1
+
+Initial release for pallet 0.8.0.
+
 
 ## pallet-crates-0.5.0
 

@@ -1,0 +1,8 @@
+{:header "cassandra"
+ :title " A [pallet](http://palletops.com/) crate to install and configure
+[cassandra](http://cassandra.apache.org/)."
+ :git-repo "https://github.com/pallet/cassandra-crate"
+ :api-docs "http://palletops.com/cassandra-crate/0.8/api"
+ :annotated-docs "http://palletops.com/cassandra-crate/0.8/annotated/uberdoc.html"
+ :tag-prefix ""
+ :versions [{:pallet "0.8.0-beta.6" :version "0.8.0-alpha.1"}]}

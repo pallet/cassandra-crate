@@ -1,7 +1,8 @@
 (ns pallet.crate.cassandra-test
-  (:use pallet.crate.cassandra)
   (:require
-   [pallet.action.package :as package]
+   [pallet.crate.cassandra :as cassandra])
+  (:require
+   [pallet.api :as api :refer [plan-fn]]
    [pallet.build-actions :as build-actions]
    [pallet.stevedore :as stevedore])
   (:use clojure.test
@@ -13,5 +14,15 @@
     (is (first
          (build-actions/build-actions
           {:server a}
-          (from-package)
-          (install))))))
+          (cassandra/settings {})
+          (cassandra/install)
+          (cassandra/configure))))))
+
+(defn cassandra-test []
+  ;; TODO - add a meaningful test
+  )
+
+(def cassandra-test-spec
+  (api/server-spec
+   :extends [(cassandra/server-spec {})]
+   :phases {:test (plan-fn (cassandra-test))}))
