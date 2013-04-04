@@ -1,3 +1,8 @@
+## Credits
+
+Many thanks to [Pierre-Yves Ritschard](http://github.com/pyr) for considerable
+input on the 0.8 crate.
+
 ## Support
 
 [On the group](http://groups.google.com/group/pallet-clj), or
